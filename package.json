@@ -1,0 +1,26 @@
+{
+  "name": "willy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kukyn/Willy.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kukyn/Willy.js/issues"
+  },
+  "homepage": "https://github.com/Kukyn/Willy.js#readme",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "cheerio": "^1.0.0-rc.10",
+    "discord.js": "^13.6.0",
+    "fs": "^0.0.1-security"
+  }
+}
