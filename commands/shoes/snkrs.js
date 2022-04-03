@@ -78,7 +78,7 @@ module.exports={
                     ],
                     timestamp: new Date(),
                     footer: {
-                        text: `Shoes ${i+1}/${length}`,
+                        text: `Shoes ${i+1}`,
                        
                     },  
                 }
