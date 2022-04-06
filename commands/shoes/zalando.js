@@ -34,8 +34,11 @@ module.exports={
                         case "women":
                             url = channels.woman.url
                         break
+                        default:
+                        return
                     }
                     break
+                    
                 default:
                     return 
             }
