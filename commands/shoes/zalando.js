@@ -26,6 +26,16 @@ module.exports={
                 case channels.woman.id:
                     url = channels.woman.url
                     break
+                case channels.test.id:
+                    switch(args[0]){
+                        case "men":
+                            url = channels.man.url
+                        break
+                        case "women":
+                            url = channels.woman.url
+                        break
+                    }
+                    break
                 default:
                     return 
             }
