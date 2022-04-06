@@ -87,7 +87,7 @@ module.exports = function createArray(){
                     const kktend = new Date(timeplus2) 
                     if(dateNow < kktstart.toISOString()){
                         return `[RAFFLE]
-                        ${kktstart.toLocaleDateString()} | ${kktstart.toLocaleTimeString()} - ${kktend.toLocaleTimeString()}`
+                        ${kktstart.toLocaleDateString()}\n${kktstart.toLocaleTimeString()} - ${kktend.toLocaleTimeString()}`
                     }
                    
                     
