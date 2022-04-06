@@ -11,11 +11,14 @@ module.exports={
             woman: {
                 id: "936740747347112006",
                 url: "https://www.zalando.cz/release-calendar/tenisky-zeny/"
-            }        
+            } ,
+            test:{
+                id: "960915619912503326"
+            }       
         }
         var url = ""
         
-        if(message.channel.id === channels.man.id || message.channel.id === channels.woman.id){
+        if(message.channel.id === channels.man.id || message.channel.id === channels.woman.id || message.channel.id === channels.test.id){
             switch(message.channel.id){
                 case channels.man.id:
                     url = channels.man.url

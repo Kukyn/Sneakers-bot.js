@@ -7,10 +7,10 @@ module.exports={
     run: async ({client, message, args}) =>{
 
         let textChannel = {
-            id: "936762796266364928"
+            id: ["936762796266364928","960915619912503326"]
         }
         
-        if(message.channel.id === textChannel.id){
+        if(message.channel.id === textChannel.id[0] || message.channel.id === textChannel.id[1]){
 
             await message.channel.messages.fetch().then(messages =>{
                 message.channel.bulkDelete(messages)
