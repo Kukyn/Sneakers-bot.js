@@ -86,13 +86,13 @@ module.exports = function createArray(){
                     const timeplus2 = dateDropEnd.setHours( dateDropEnd.getHours() + 2 );
                     const kktend = new Date(timeplus2) 
                     if(dateNow < kktstart.toISOString()){
-                        return `[TO BE RELEASED]
+                        return `[RAFFLE]
                         ${kktstart.toLocaleDateString()} | ${kktstart.toLocaleTimeString()} - ${kktend.toLocaleTimeString()}`
                     }
                    
                     
                 }
-                return `[TO BE RELEASED]
+                return `[RELEASE]
                 ${kktstart.toLocaleDateString()} ${kktstart.toLocaleTimeString()}`
                
             }
