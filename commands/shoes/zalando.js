@@ -133,7 +133,7 @@ module.exports={
             const array = []
             simples.forEach((element,i)=>{
                 if(element.fulfillment_qualities !== undefined){
-                    array.push(`${jsonarray.simples[i].size.local_size} - ${element.fulfillment_qualities[0]}\n`)
+                    array.push(`${jsonarray.simples[i].size.local_size} - ${element.fulfillment_qualities[0].toUpperCase()}\n`)
                 }else{
                     array.push(`${jsonarray.simples[i].size.local_size} - UNKNOWN\n`)
                 }
