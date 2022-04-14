@@ -47,7 +47,7 @@ module.exports = function createArray(){
         }
 
         function getImage(element){
-            if(element.publishedContent.nodes[0].nodes[0].properties.squarishURL != undefined){
+            if(element.publishedContent.nodes[0].nodes[0] != undefined){
                 return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
             }else{
                 return element.publishedContent.nodes[0].nodes[1].properties.portraitURL
