@@ -47,7 +47,7 @@ module.exports = function createArray(){
         }
 
         function getImage(element){
-            return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
+            //return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
         }
         function getSKU(element){
            /* return new Promise((resolve,reject)=>{
