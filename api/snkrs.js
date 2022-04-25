@@ -123,11 +123,17 @@ module.exports = function createArray(){
             const skus = element.productInfo[0].skus 
             const array = []
             gtins.forEach((gtin,i) =>{
-                if(gtin.level !== undefined){
-                    array.push(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
-                }else{
-                    array.push(`${skus[i].countrySpecifications[0].localizedSize} - UNKNOWN\n`)
+                try{
+                    if(gtin.level !== undefined){
+                        console.log(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
+                        array.push(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
+                    }else{
+                        array.push(`${skus[i].countrySpecifications[0].localizedSize} - UNKNOWN\n`)
+                    }
+                }catch(e){
+                    array.push('CAN´T LOAD')
                 }
+                
                 
                 
             })
