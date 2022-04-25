@@ -47,11 +47,16 @@ module.exports = function createArray(){
         }
 
         function getImage(element){
-           /* if(element.publishedContent.nodes[0].nodes != undefined){
-                return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
-            }else{
-                return element.publishedContent.nodes[0].nodes[1].properties.portraitURL
-            }*/
+            try{
+                if(element.publishedContent.nodes[0].nodes != undefined){
+                    return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
+                }else{
+                    return element.publishedContent.nodes[0].nodes[1].properties.portraitURL
+                }
+            }catch{
+                return ""
+            }
+           
             
         }
         function getSKU(element){
@@ -125,7 +130,7 @@ module.exports = function createArray(){
             gtins.forEach((gtin,i) =>{
                 try{
                     if(gtin.level !== undefined){
-                        console.log(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
+                        //console.log(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
                         array.push(`${skus[i].countrySpecifications[0].localizedSize} - ${gtin.level}\n`)
                     }else{
                         array.push(`${skus[i].countrySpecifications[0].localizedSize} - UNKNOWN\n`)
@@ -142,14 +147,14 @@ module.exports = function createArray(){
                 return element !== "";
             }))
            
-            array.forEach((element,i)=>{
+           /* array.forEach((element,i)=>{
                 if((element == "" || element == undefined || element == null)){
                     console.log("kokot " + typeof(element))
                 }
                 else{
                     console.log(element)
                 }
-            })
+            })*/
             
             
         }
