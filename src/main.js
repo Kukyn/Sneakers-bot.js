@@ -22,7 +22,7 @@ client.loadCommands = (bot,reload) => require("./handlers/commands")(bot,reload)
 //client.loadTasks = (bot,reload) => require("./handlers/tasks")(bot,reload)
 //TODO add tasks handler
 
-client.loadTasks(bot,false)
+//client.loadTasks(bot,false)
 client.loadEvents(bot, false)
 client.loadCommands(bot,false)
 
