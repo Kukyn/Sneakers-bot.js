@@ -19,7 +19,7 @@ client.tasks = new Discord.Collection()
 //TODO load taskt into task collection
 client.loadEvents = (bot,reload) => require("./handlers/events")(bot,reload)
 client.loadCommands = (bot,reload) => require("./handlers/commands")(bot,reload)
-client.loadTasks = (bot,reload) => require("./handlers/tasks")(bot,reload)
+//client.loadTasks = (bot,reload) => require("./handlers/tasks")(bot,reload)
 //TODO add tasks handler
 
 client.loadTasks(bot,false)
