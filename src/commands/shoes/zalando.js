@@ -11,21 +11,21 @@ module.exports={
         
         let name = "zalando"
         let gender
-        if(message.channel.id === process.env.zalando_men || message.channel.id === process.env.zalando_woman || message.channel.id === process.env.test_channel){
+        if(message.channel.id === process.env.zalando_men || message.channel.id === process.env.zalando_women || message.channel.id === process.env.test_channel){
             switch(message.channel.id){
                 case process.env.zalando_men:
                     gender = "men"
                     break
                 case process.env.zalando_women:
-                    gender = "woman"
+                    gender = "women"
                     break
                 case process.env.test_channel:
                     switch(args[0]){
                         case "men":
                             gender = "men"
                         break
-                        case "woman":
-                            gender = "woman"
+                        case "women":
+                            gender = "women"
                         break
                         default:
                         

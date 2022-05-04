@@ -5,7 +5,7 @@ const urls = {
     snrks: "https://api.nike.com/product_feed/threads/v3/?anchor=0&count=50&filter=marketplace%28CZ%29&filter=language%28en-GB%29&filter=upcoming%28true%29&filter=channelId%28010794e5-35fe-4e32-aaff-cd2c74f89d61%29&filter=exclusiveAccess%28true%2Cfalse%29&sort=effectiveStartSellDateAsc",
     zalando:{
         men:"https://www.zalando.cz/release-calendar/tenisky-muzi/",
-        woman:"https://www.zalando.cz/release-calendar/tenisky-zeny/"
+        women:"https://www.zalando.cz/release-calendar/tenisky-zeny/"
     }
 }
 
@@ -29,8 +29,8 @@ module.exports = function createArray(site,siteType)
                 var url = urls.zalando
                 if(gender == "men"){
                     url = url.men
-                }else if(gender == "woman"){
-                    url = url.woman
+                }else if(gender == "women"){
+                    url = url.women
                 }else{
                     reject(`Info for ${gender} doesnt exist.`)
                 }
