@@ -1,4 +1,5 @@
 const Discord = require("discord.js")
+require("dotenv").config();
 
 const client = new Discord.Client({
     intents:[
@@ -28,4 +29,4 @@ client.loadCommands(bot,false)
 module.exports = bot
 
 
-client.login(`OTM2NjkxMzMzNzk0NTE2OTky.YfQ3yA.lNMlZn4SEN2SZFH0e5HPP8jiM9I`)
+client.login(process.env.botToken)
