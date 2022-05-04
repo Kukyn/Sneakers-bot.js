@@ -2,7 +2,7 @@ const { getFiles } = require("../util/functions")
 
 module.exports = (bot, reload) => {
     const { client } = bot
-    let events = getFiles("./events/",".js")
+    let events = getFiles("./src/events/",".js")
 
     if(events.reload === 0){
         console.log("No events to load")
