@@ -1,6 +1,6 @@
 {
-  "name": "willy",
-  "version": "1.0.0",
+  "name": "sneakers-bot",
+  "version": "2.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -8,18 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kukyn/Willy.js.git"
+    "url": "git+https://github.com/Kukyn/Sneakers-bot.js.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Kukyn/Willy.js/issues"
+    "url": "https://github.com/Kukyn/Sneakers-bot.js/issues"
   },
-  "homepage": "https://github.com/Kukyn/Willy.js#readme",
+  "homepage": "https://github.com/Kukyn/Sneakers-bot.js#readme",
   "dependencies": {
     "axios": "^0.25.0",
     "cheerio": "^1.0.0-rc.10",
+    "date-fns-tz": "^1.3.4",
     "discord.js": "^13.6.0",
     "dotenv": "^16.0.0",
     "fs": "^0.0.1-security"

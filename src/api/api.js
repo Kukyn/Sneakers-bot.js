@@ -1,5 +1,8 @@
 const axios = require("axios")
 const cheerio = require("cheerio")  
+const {format,zonedTimeToUtc,toDate} = require("date-fns-tz")
+const timeZone = `Europe/Prague`
+
 
 const urls = {
     snrks: "https://api.nike.com/product_feed/threads/v3/?anchor=0&count=50&filter=marketplace%28CZ%29&filter=language%28en-GB%29&filter=upcoming%28true%29&filter=channelId%28010794e5-35fe-4e32-aaff-cd2c74f89d61%29&filter=exclusiveAccess%28true%2Cfalse%29&sort=effectiveStartSellDateAsc",
@@ -92,7 +95,7 @@ module.exports = function createArray(site,siteType)
         });    
         return apiResponse 
     }
-
+    //TODO: Handle exclusive access shoes - show them or not, Honza will decide.
     function parseSnkrs(response){
         this.name = "snkrs"
         let usedNames = []
@@ -175,26 +178,24 @@ function getAvailability(element,site){
 }
 function getReleaseDate(element,site){
     if(site == "zalando"){
-        const dateRaw = new Date("20"+element.availability.releaseDate)
-        const timeplus2 = dateRaw.setHours( dateRaw.getHours() + 2 );
-        const date = new Date(timeplus2) 
-        return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`
+        const dateRaw = "20"+element.availability.releaseDate
+        const dateFixed = new Date().setTime( new Date(dateRaw).getTime() - new Date().getTimezoneOffset()*60*1000 )
+        const date = format(zonedTimeToUtc(dateFixed,timeZone),"dd.MM.yyyy HH:mm") 
+        return `[RELEASE]
+        ${date}`
     }else if(site == "snkrs"){
         var lauchview = element.productInfo[0].launchView
+        var merchProduct = element.productInfo[0].merchProduct
             const dateNow = new Date().toISOString()
             
             if(!(lauchview === undefined)){
-                const dateDropStartRaw = new Date(lauchview.startEntryDate)
-                const timeplus2 = dateDropStartRaw.setHours( dateDropStartRaw.getHours() + 2 );
-                const dateDropStart = new Date(timeplus2) 
+                const dateDropStart = toDate(lauchview.startEntryDate)
                 if(lauchview.stopEntryDate !== undefined){
                     
-                    const dateDropEndRaw = new Date(lauchview.stopEntryDate)
-                    const timeplus2 = dateDropEndRaw.setHours( dateDropEndRaw.getHours() + 2 );
-                    const dateDropEnd = new Date(timeplus2) 
-                    if(dateNow < dateDropStart.toISOString()){
+                    const dateDropEnd = toDate(lauchview.stopEntryDate)
+                    if(dateNow < dateDropStart){
                         return `[RAFFLE]
-                        ${dateDropStart.toLocaleDateString()}\n${dateDropStart.toLocaleTimeString()} - ${dateDropEnd.toLocaleTimeString()}`
+                        ${format(zonedTimeToUtc(dateDropStart,timeZone),"dd.MM.yyyy HH:mm")} - ${format(zonedTimeToUtc(dateDropEnd,timeZone),"HH:mm")}`
                     }
                    
                     
@@ -203,7 +204,15 @@ function getReleaseDate(element,site){
                 ${dateDropStart.toLocaleDateString()} ${dateDropStart.toLocaleTimeString()}`
                
             }
-            return "Can not be loaded"
+            if(merchProduct.status == "INACTIVE"){
+                let shownRaw = toDate(merchProduct.commercePublishDate)
+                let releaseRaw = toDate(merchProduct.commerceStartDate)
+                return `[HIDDEN]
+                HIDDEN UNTIL: ${format(zonedTimeToUtc(shownRaw,timeZone),"dd.MM.yyyy HH:mm")}
+                RELEASE: ${format(zonedTimeToUtc(releaseRaw,timeZone),"dd.MM.yyyy HH:mm")}`
+
+                
+            }
     }
     else{
         return "Unknown site argunement passed to funciton"
