@@ -1,6 +1,6 @@
 const axios = require("axios")
 const cheerio = require("cheerio")  
-const {format,zonedTimeToUtc,toDate} = require("date-fns-tz")
+const {toDate,utcToZonedTime,format} = require("date-fns-tz")
 const timeZone = `Europe/Prague`
 
 
@@ -180,7 +180,7 @@ function getReleaseDate(element,site){
     if(site == "zalando"){
         const dateRaw = "20"+element.availability.releaseDate
         const dateFixed = new Date().setTime( new Date(dateRaw).getTime() - new Date().getTimezoneOffset()*60*1000 )
-        const date = format(zonedTimeToUtc(dateFixed,timeZone),"dd.MM.yyyy HH:mm") 
+        const date = format(utcToZonedTime(dateFixed,timeZone),"dd.MM.yyyy HH:mm") 
         return `[RELEASE]
         ${date}`
     }else if(site == "snkrs"){
@@ -195,21 +195,21 @@ function getReleaseDate(element,site){
                     const dateDropEnd = toDate(lauchview.stopEntryDate)
                     if(dateNow < dateDropStart){
                         return `[RAFFLE]
-                        ${format(zonedTimeToUtc(dateDropStart,timeZone),"dd.MM.yyyy HH:mm")} - ${format(zonedTimeToUtc(dateDropEnd,timeZone),"HH:mm")}`
+                        ${format(utcToZonedTime(dateDropStart,timeZone),"dd.MM.yyyy HH:mm")} - ${format(utcToZonedTime(dateDropEnd,timeZone),"HH:mm")}`
                     }
                    
                     
                 }
                 return `[RELEASE]
-                ${dateDropStart.toLocaleDateString()} ${dateDropStart.toLocaleTimeString()}`
+                ${format(utcToZonedTime(dateDropStart,timeZone),"dd.MM.yyyy HH:mm")}`
                
             }
             if(merchProduct.status == "INACTIVE"){
                 let shownRaw = toDate(merchProduct.commercePublishDate)
                 let releaseRaw = toDate(merchProduct.commerceStartDate)
                 return `[HIDDEN]
-                HIDDEN UNTIL: ${format(zonedTimeToUtc(shownRaw,timeZone),"dd.MM.yyyy HH:mm")}
-                RELEASE: ${format(zonedTimeToUtc(releaseRaw,timeZone),"dd.MM.yyyy HH:mm")}`
+                HIDDEN UNTIL: ${format(utcToZonedTime(shownRaw,timeZone),"dd.MM.yyyy HH:mm")}
+                RELEASE: ${format(utcToZonedTime(releaseRaw,timeZone),"dd.MM.yyyy HH:mm")}`
 
                 
             }
