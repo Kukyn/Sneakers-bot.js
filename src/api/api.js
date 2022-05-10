@@ -82,7 +82,11 @@ module.exports = function createArray(site,siteType)
                     size: getSizes(element,this.name)
                 }
                 usedNames.push(shoe.name)
-              
+                Object.entries(shoe).forEach(([key, value]) => {
+                    if(value === undefined){
+                        shoe[key] = "Can not be loaded"
+                    }
+                  })
                 apiResponse.push(shoe)
             }
         });    
@@ -110,7 +114,11 @@ module.exports = function createArray(site,siteType)
                     size: getSizes(element,this.name)
                 }
                 usedNames.push(shoe.name)
-              
+                Object.entries(shoe).forEach(([key, value]) => {
+                    if(value === undefined){
+                        shoe[key] = "Can not be loaded"
+                    }
+                  })
                 apiResponse.push(shoe)
             }
         });    
@@ -129,6 +137,7 @@ function getSizes(element,site){
 function getAvailability(element,site){
     if(site == "zalando"){
         const simples = element.simples
+        if(element.inStock == true){
             const array = []
             simples.forEach((simple,i)=>{
                 if(simple.fulfillment_qualities !== undefined){
@@ -139,6 +148,10 @@ function getAvailability(element,site){
                
             })
             return array.toString().replaceAll(",","")
+        }
+        else{
+            return "AREN´T IN STOCK"
+        }
     }else if(site == "snkrs"){
         const gtins = element.productInfo[0].availableGtins
             const skus = element.productInfo[0].skus 
@@ -190,7 +203,9 @@ function getReleaseDate(element,site){
                 ${dateDropStart.toLocaleDateString()} ${dateDropStart.toLocaleTimeString()}`
                
             }
-    }else{
+            return "Can not be loaded"
+    }
+    else{
         return "Unknown site argunement passed to funciton"
     }
 }
