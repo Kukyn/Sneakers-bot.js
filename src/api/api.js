@@ -14,7 +14,7 @@ const urls = {
 var color
 
 
-module.exports = function createArray(site,siteType)
+module.exports = function createArray(site,siteType,message)
 {
     
     let gender = siteType || null
@@ -22,7 +22,7 @@ module.exports = function createArray(site,siteType)
     var parsedResponse
     
     return new Promise(async(resolve,reject)=>{
-        console.log(`API request for ${site} ${gender}`)
+        console.log(`API request for ${site} ${gender} by ${message.member.user.tag}`)
         switch(site){
             case "snkrs":
                 var url = urls.snrks
@@ -82,7 +82,8 @@ module.exports = function createArray(site,siteType)
                     avail: getAvailability(element,this.name),
                     release: getReleaseDate(element,this.name),
                     sku: "PLACEHOLDER",
-                    size: getSizes(element,this.name)
+                    size: getSizes(element,this.name),
+                    color: color || 0x33ccff 
                 }
                 usedNames.push(shoe.name)
                 Object.entries(shoe).forEach(([key, value]) => {
@@ -115,7 +116,7 @@ module.exports = function createArray(site,siteType)
                     release: getReleaseDate(element,this.name),
                     sku: element.productInfo[0].merchProduct.styleColor,
                     size: getSizes(element,this.name),
-                    color: color
+                    color: color || 0x33ccff
                 }
                 usedNames.push(shoe.name)
                 Object.entries(shoe).forEach(([key, value]) => {
@@ -179,16 +180,16 @@ function getAvailability(element,site){
 }
 function getReleaseDate(element,site){
     if(site == "zalando"){
+      
         const dateRaw = "20"+element.availability.releaseDate
         const dateFixed = new Date().setTime( new Date(dateRaw).getTime() - new Date().getTimezoneOffset()*60*1000 )
         const date = format(utcToZonedTime(dateFixed,timeZone),"dd.MM.yyyy HH:mm") 
-        color = 0x33ccff
         return `[RELEASE]
         ${date}`
     }else if(site == "snkrs"){
         var lauchview = element.productInfo[0].launchView
         var merchProduct = element.productInfo[0].merchProduct
-        color = 0x33ccff
+  
             const dateNow = new Date().toISOString()
             
             if(!(lauchview === undefined)){

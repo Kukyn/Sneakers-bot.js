@@ -42,7 +42,7 @@ module.exports={
                 message.channel.bulkDelete(messages)
             })
 
-            getArray(name,gender).then((array)=>{
+            getArray(name,gender,message).then((array)=>{
                 
                 array.forEach(async (element)=>{
                   
