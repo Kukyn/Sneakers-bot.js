@@ -3,7 +3,7 @@ module.exports = {
         return new Promise((resolve,reject)=>{
             
             const ShoeEmbed = {
-                color: 0x0099ff,
+                color: shoe.color,
                 title: shoe.name,
                 //url: shoe.url,
                 

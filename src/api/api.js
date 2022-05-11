@@ -11,7 +11,7 @@ const urls = {
         women:"https://www.zalando.cz/release-calendar/tenisky-zeny/"
     }
 }
-
+var color
 
 
 module.exports = function createArray(site,siteType)
@@ -72,7 +72,7 @@ module.exports = function createArray(site,siteType)
         let apiResponse = []
         data.feed.items[2].articles.forEach(element => { 
             if(element.availability.comingSoon == true && !(usedNames.includes(element.name.split(" - ")[0].replace(/\s+$/, '')))){
-
+                
                 const shoe = {
                     name: element.name.split(" - ")[0].replace(/\s+$/, ''),
                     price: element.price.current,
@@ -95,7 +95,7 @@ module.exports = function createArray(site,siteType)
         });    
         return apiResponse 
     }
-    //TODO: Handle exclusive access shoes - show them or not, Honza will decide.
+    
     function parseSnkrs(response){
         this.name = "snkrs"
         let usedNames = []
@@ -114,7 +114,8 @@ module.exports = function createArray(site,siteType)
                     avail: getAvailability(element,this.name),
                     release: getReleaseDate(element,this.name),
                     sku: element.productInfo[0].merchProduct.styleColor,
-                    size: getSizes(element,this.name)
+                    size: getSizes(element,this.name),
+                    color: color
                 }
                 usedNames.push(shoe.name)
                 Object.entries(shoe).forEach(([key, value]) => {
@@ -181,11 +182,13 @@ function getReleaseDate(element,site){
         const dateRaw = "20"+element.availability.releaseDate
         const dateFixed = new Date().setTime( new Date(dateRaw).getTime() - new Date().getTimezoneOffset()*60*1000 )
         const date = format(utcToZonedTime(dateFixed,timeZone),"dd.MM.yyyy HH:mm") 
+        color = 0x33ccff
         return `[RELEASE]
         ${date}`
     }else if(site == "snkrs"){
         var lauchview = element.productInfo[0].launchView
         var merchProduct = element.productInfo[0].merchProduct
+        color = 0x33ccff
             const dateNow = new Date().toISOString()
             
             if(!(lauchview === undefined)){
@@ -207,10 +210,16 @@ function getReleaseDate(element,site){
             if(merchProduct.status == "INACTIVE"){
                 let shownRaw = toDate(merchProduct.commercePublishDate)
                 let releaseRaw = toDate(merchProduct.commerceStartDate)
-                return `[HIDDEN]
+                let message = "[HIDDEN]"
+                if(merchProduct.exclusiveAccess){
+                    color = 0xff0000
+                    message = message + " [EXCLUSIVE ACCESS]"
+                }
+                
+                return `${message}
                 HIDDEN UNTIL: ${format(utcToZonedTime(shownRaw,timeZone),"dd.MM.yyyy HH:mm")}
                 RELEASE: ${format(utcToZonedTime(releaseRaw,timeZone),"dd.MM.yyyy HH:mm")}`
-
+                
                 
             }
     }
