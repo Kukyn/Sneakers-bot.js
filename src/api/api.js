@@ -13,7 +13,7 @@ const urls = {
 }
 var color
 
-
+//TODO implement disabling button when shoes are in exclusive access
 module.exports = function createArray(site,siteType,message)
 {
     
@@ -111,7 +111,7 @@ module.exports = function createArray(site,siteType,message)
                         element.productInfo[0].merchProduct.genders
                     ],
                     url: `https://www.nike.com/cz/en/launch/t/${element.publishedContent.properties.seo.slug}`,
-                    image: element.publishedContent.nodes[0].nodes[0].properties.squarishURL,
+                    image: getImage(element,this.name),
                     avail: getAvailability(element,this.name),
                     release: getReleaseDate(element,this.name),
                     sku: element.productInfo[0].merchProduct.styleColor,
@@ -128,6 +128,22 @@ module.exports = function createArray(site,siteType,message)
             }
         });    
         return apiResponse 
+    }
+}
+function getImage(element,site){
+    //
+    switch(site){
+        case "snkrs":
+            try{
+                return element.publishedContent.nodes[0].nodes[0].properties.squarishURL
+            }catch{
+                try{
+                    return element.publishedContent.nodes[0].nodes[0].properties.squarish.url
+                }catch{
+                    return ""
+                }
+            }
+            break;
     }
 }
 function getSizes(element,site){
